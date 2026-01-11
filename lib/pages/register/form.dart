@@ -24,8 +24,8 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void validateAndSave() {
-    final FormState form = _formKey.currentState;
-    if (form.validate()) {
+    final FormState? form = _formKey.currentState;
+    if (form?.validate() ?? false) {
       print('Form is valid');
     } else {
       print('Form is invalid');
@@ -47,14 +47,14 @@ class _RegisterFormState extends State<RegisterForm> {
                 child: AreaCodePicker(areaCode, _changeAreaCode),
               ),
             ),
-            validator: (String value) {
-              if (value.isEmpty) {
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter your phone number';
               }
 
               return null;
             },
-            onSaved: (String value) => phoneNumber = value,
+            onSaved: (String? value) => phoneNumber = value ?? '',
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 20.0),
@@ -76,14 +76,14 @@ class _RegisterFormState extends State<RegisterForm> {
                 },
               ),
             ),
-            validator: (String value) {
-              if (value.isEmpty) {
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter your password';
               }
 
               return null;
             },
-            onSaved: (String value) => password = value,
+            onSaved: (String? value) => password = value ?? '',
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 20.0),
@@ -105,14 +105,14 @@ class _RegisterFormState extends State<RegisterForm> {
                 },
               ),
             ),
-            validator: (String value) {
-              if (value.isEmpty) {
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter your password again';
               }
 
               return null;
             },
-            onSaved: (String value) => rePassword = value,
+            onSaved: (String? value) => rePassword = value ?? '',
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 20.0),
@@ -121,10 +121,12 @@ class _RegisterFormState extends State<RegisterForm> {
             decoration: InputDecoration(
               hintText: 'Enter Your VCode',
               suffixIcon: Material(
-                child: RaisedButton(
-                  color: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0)),
+                  ),
                   child: Text(
                     "Get VCode",
                     style: TextStyle(color: Colors.white),
@@ -136,30 +138,31 @@ class _RegisterFormState extends State<RegisterForm> {
                 // elevation: 5.0,
               ),
             ),
-            validator: (String value) {
-              if (value.isEmpty) {
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter your vcode';
               }
 
               return null;
             },
-            onSaved: (String value) => vCode = value,
+            onSaved: (String? value) => vCode = value ?? '',
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 40.0),
           ),
           Center(
-            child: ButtonTheme(
-              minWidth: 800.0,
+            child: SizedBox(
+              width: 800.0,
               height: 40.0,
-              child: RaisedButton(
-                color: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                // textTheme: ButtonTextTheme.primary,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                ),
                 onPressed: () {
-                  print(_formKey.currentState.validate());
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                  print(_formKey.currentState?.validate());
+                  if (_formKey.currentState?.validate() ?? false) {
+                    _formKey.currentState?.save();
                     print(
                         'PhoneNumber Is $phoneNumber, Password Is $password, RePassword Is $rePassword, VCode Is $vCode');
                     Navigator.push(
@@ -168,8 +171,8 @@ class _RegisterFormState extends State<RegisterForm> {
                         builder: (BuildContext context) => LoginPage(),
                       ),
                     );
-                    _formKey.currentState.reset();
-                    
+                    _formKey.currentState?.reset();
+
                     return;
                   }
                   print('Data Is Missing!!!');
@@ -202,8 +205,8 @@ class AreaCodePicker extends StatelessWidget {
       value: areaCode,
       isDense: false,
       // isExpanded: true,
-      onChanged: (String newAreaCode) {
-        changeAreaCode(newAreaCode);
+      onChanged: (String? newAreaCode) {
+        changeAreaCode(newAreaCode!);
       },
       items: <String>['+86', '+852', '+853', '+886']
           .map<DropdownMenuItem<String>>((String value) {
