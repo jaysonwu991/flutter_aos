@@ -34,14 +34,14 @@ class _LoginFormState extends State<LoginForm> {
                 child: AreaCodePicker(areaCode, _changeAreaCode),
               ),
             ),
-            validator: (String value) {
-              if (value.isEmpty) {
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter your phone number';
               }
 
               return null;
             },
-            onSaved: (String value) => phoneNumber = value,
+            onSaved: (String? value) => phoneNumber = value ?? '',
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 20.0),
@@ -63,31 +63,32 @@ class _LoginFormState extends State<LoginForm> {
                 },
               ),
             ),
-            validator: (String value) {
-              if (value.isEmpty) {
+            validator: (String? value) {
+              if (value == null || value.isEmpty) {
                 return 'Please enter your password';
               }
 
               return null;
             },
-            onSaved: (String value) => password = value,
+            onSaved: (String? value) => password = value ?? '',
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 40.0),
           ),
           Center(
-            child: ButtonTheme(
-              minWidth: 800.0,
+            child: SizedBox(
+              width: 800.0,
               height: 40.0,
-              child: RaisedButton(
-                color: Colors.blue,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                // textTheme: ButtonTextTheme.primary,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                ),
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                  if (_formKey.currentState?.validate() ?? false) {
+                    _formKey.currentState?.save();
                     print('PhoneNumber Is $phoneNumber, Password Is $password');
-                    
+
                     return;
                   }
                   print('Data Is Missing!!!');
@@ -120,8 +121,8 @@ class AreaCodePicker extends StatelessWidget {
       value: areaCode,
       isDense: false,
       // isExpanded: true,
-      onChanged: (String newAreaCode) {
-        changeAreaCode(newAreaCode);
+      onChanged: (String? newAreaCode) {
+        changeAreaCode(newAreaCode!);
       },
       items: <String>['+86', '+852', '+853', '+886']
           .map<DropdownMenuItem<String>>((String value) {
