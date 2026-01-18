@@ -4,7 +4,7 @@ class Validators {
 
   /// Validates phone number
   /// Accepts numbers with optional spaces, dashes, or parentheses
-  /// Minimum 8 digits, maximum 15 digits
+  /// Minimum 8 digits, maximum 11 digits
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your phone number';
@@ -18,12 +18,12 @@ class Validators {
       return 'Please enter a valid phone number';
     }
 
-    // Check length (8-15 digits is standard for international numbers)
+    // Check length (8-11 digits for this app)
     if (digitsOnly.length < 8) {
       return 'Phone number is too short';
     }
 
-    if (digitsOnly.length > 15) {
+    if (digitsOnly.length > 11) {
       return 'Phone number is too long';
     }
 

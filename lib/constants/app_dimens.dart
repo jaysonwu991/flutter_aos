@@ -34,11 +34,11 @@ class AppDimens {
   static const double radiusRound = 30;
 
   // Button
-  static const double buttonHeight = 40;
-  static const double buttonHeightLarge = 48;
-  static const double buttonHeightSmall = 32;
+  static const double buttonHeight = 48;
+  static const double buttonHeightLarge = 56;
+  static const double buttonHeightSmall = 36;
   static const double buttonPaddingHorizontal = 16;
-  static const double buttonPaddingVertical = 10;
+  static const double buttonPaddingVertical = 6;
 
   // Form field
   static const double formFieldHeight = 48;

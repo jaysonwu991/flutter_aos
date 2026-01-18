@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_aos/constants/app_colors.dart';
 import 'package:flutter_aos/constants/app_dimens.dart';
+import 'package:flutter/services.dart';
 
 /// Custom text form field with consistent styling
 class CustomTextFormField extends StatelessWidget {
@@ -15,6 +16,10 @@ class CustomTextFormField extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.maxLength,
+    this.inputFormatters,
+    this.textAlign,
+    this.textDirection,
+    this.style,
     this.enabled = true,
     super.key,
   });
@@ -29,6 +34,10 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String)? onChanged;
   final TextEditingController? controller;
   final int? maxLength;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextAlign? textAlign;
+  final TextDirection? textDirection;
+  final TextStyle? style;
   final bool enabled;
 
   @override
@@ -37,6 +46,10 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
+      textAlign: textAlign ?? TextAlign.start,
+      textDirection: textDirection,
+      style: style ?? const TextStyle(color: AppColors.textPrimary),
       validator: validator,
       onSaved: onSaved,
       onChanged: onChanged,
@@ -45,14 +58,20 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: const TextStyle(color: AppColors.textHint),
-        prefixIcon: prefixIcon != null
-            ? Padding(
-                padding: const EdgeInsets.only(right: AppDimens.paddingSmall),
-                child: prefixIcon,
+        errorStyle: const TextStyle(
+          color: AppColors.error,
+          fontSize: 12,
+        ),
+        errorMaxLines: 2,
+        prefixIcon: prefixIcon,
+        prefixIconConstraints: prefixIcon != null
+            ? const BoxConstraints(
+                minWidth: 0,
+                minHeight: 0,
               )
             : null,
         suffixIcon: suffixIcon,
-        counterText: maxLength != null ? null : '',
+        counterText: '',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimens.radiusMedium),
           borderSide: const BorderSide(color: AppColors.formBorder),

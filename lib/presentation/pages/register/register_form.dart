@@ -10,6 +10,7 @@ import 'package:flutter_aos/presentation/widgets/common/custom_button.dart';
 import 'package:flutter_aos/presentation/widgets/common/custom_text_form_field.dart';
 import 'package:flutter_aos/utils/app_logger.dart';
 import 'package:flutter_aos/utils/validators.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -114,6 +115,7 @@ class _RegisterFormState extends State<RegisterForm> {
       builder: (context, authProvider, formProvider, child) {
         return Form(
           key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -122,6 +124,13 @@ class _RegisterFormState extends State<RegisterForm> {
                 controller: _phoneController,
                 hintText: AppStrings.phoneNumberHint,
                 keyboardType: TextInputType.phone,
+                maxLength: 11,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(11),
+                ],
+                textDirection: TextDirection.ltr,
+                textAlign: TextAlign.start,
                 prefixIcon: AreaCodePicker(
                   selectedAreaCode: formProvider.areaCode,
                   onChanged: formProvider.setAreaCode,
